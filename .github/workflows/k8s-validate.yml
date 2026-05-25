@@ -18,8 +18,9 @@ jobs:
         uses: azure/setup-kubectl@v4
 
       - name: Validate Kubernetes manifests
-        run: |
-          find . -name "*.yaml" -o -name "*.yml" | while read file; do
-            echo "Validating $file"
-            kubectl apply --dry-run=client -f "$file"
-          done
+          run: |
+            find . \( -path "./.github" -prune \) -o \
+              \( -name "*.yaml" -o -name "*.yml" \) -print | while read file; do
+              echo "Validating $file"
+              kubectl apply --dry-run=client -f "$file"
+            done
