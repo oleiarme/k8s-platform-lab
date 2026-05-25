@@ -1,0 +1,17 @@
+*.log
+*.tmp
+.env
+
+.antigravity-ide-server/
+.gemini/
+
+.vscode/
+.idea/
+
+*.pem
+*.key
+*.crt
+
+terraform.tfstate
+terraform.tfstate.*
+.terraform/
