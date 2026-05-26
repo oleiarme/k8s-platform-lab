@@ -14,13 +14,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup kubectl
-        uses: azure/setup-kubectl@v4
+      - name: Set up Kubeconform
+        uses: bmuschko/setup-kubeconform@v1
 
       - name: Validate Kubernetes manifests
         run: |
           find . \( -path "./.github" -prune \) -o \
-          \( -name "*.yaml" -o -name "*.yml" \) -print | while read file; do
-            echo "Validating $file"
-            kubectl apply --dry-run=client --validate=false -f "$file"
-          done
+          \( -name "*.yaml" -o -name "*.yml" \) -print | xargs kubeconform -summary -ignore-missing-schemas
