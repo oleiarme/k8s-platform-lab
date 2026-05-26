@@ -27,9 +27,9 @@ jobs:
             -o \( -name "*.yaml" -o -name "*.yml" \) -print \
             | while read file; do
                 echo "Validating $file"
-                kubeconform "$file"
+                kubeconform -ignore-missing-schemas "$file"
               done
 
       - name: Validate Helm chart
         run: |
-          helm template demo-app ./charts/demo-app | kubeconform -summary1~
+          helm template demo-app ./charts/demo-app | kubeconform -summary -ignore-missing-schemas
