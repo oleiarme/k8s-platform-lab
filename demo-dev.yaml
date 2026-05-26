@@ -1,0 +1,144 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  creationTimestamp: "2026-05-26T13:48:40Z"
+  generation: 164
+  name: demo-dev
+  namespace: argocd
+  resourceVersion: "90412"
+  uid: 3fe105b8-6d81-41e4-970c-b165bf20a732
+spec:
+  destination:
+    namespace: dev
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: overlays/dev
+    repoURL: https://github.com/oleiarme/k8s-platform-lab.git
+    targetRevision: main
+  syncPolicy:
+    automated:
+      enabled: true
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - PruneLast=true
+status:
+  controllerNamespace: argocd
+  health:
+    lastTransitionTime: "2026-05-26T14:49:02Z"
+    status: Healthy
+  history:
+  - deployStartedAt: "2026-05-26T13:48:40Z"
+    deployedAt: "2026-05-26T13:48:42Z"
+    id: 0
+    initiatedBy:
+      automated: true
+    revision: a34521449b7fddc572fce887661e16a6aad0de73
+    source:
+      path: overlays/dev
+      repoURL: https://github.com/oleiarme/k8s-platform-lab.git
+      targetRevision: main
+  - deployStartedAt: "2026-05-26T14:48:25Z"
+    deployedAt: "2026-05-26T14:48:26Z"
+    id: 1
+    initiatedBy:
+      automated: true
+    revision: df4d5f2752a5bdc13dff3300c75efe6b275f8af9
+    source:
+      path: overlays/dev
+      repoURL: https://github.com/oleiarme/k8s-platform-lab.git
+      targetRevision: main
+  operationState:
+    finishedAt: "2026-05-26T14:48:26Z"
+    message: successfully synced (all tasks run)
+    operation:
+      initiatedBy:
+        automated: true
+      retry:
+        limit: 5
+      sync:
+        prune: true
+        revision: df4d5f2752a5bdc13dff3300c75efe6b275f8af9
+        source:
+          path: overlays/dev
+          repoURL: https://github.com/oleiarme/k8s-platform-lab.git
+          targetRevision: main
+        syncOptions:
+        - PruneLast=true
+    phase: Succeeded
+    startedAt: "2026-05-26T14:48:25Z"
+    syncResult:
+      resources:
+      - group: ""
+        hookPhase: Running
+        kind: Service
+        message: service/demo-dev created
+        name: demo-dev
+        namespace: dev
+        status: Synced
+        syncPhase: Sync
+        version: v1
+      - group: apps
+        hookPhase: Running
+        images:
+        - nginx:stable
+        kind: Deployment
+        message: deployment.apps/demo-dev created
+        name: demo-dev
+        namespace: dev
+        status: Synced
+        syncPhase: Sync
+        version: v1
+      - group: networking.k8s.io
+        hookPhase: Running
+        kind: Ingress
+        message: ingress.networking.k8s.io/demo-dev created
+        name: demo-dev
+        namespace: default
+        status: Synced
+        syncPhase: Sync
+        version: v1
+      revision: df4d5f2752a5bdc13dff3300c75efe6b275f8af9
+      source:
+        path: overlays/dev
+        repoURL: https://github.com/oleiarme/k8s-platform-lab.git
+        targetRevision: main
+  reconciledAt: "2026-05-26T15:41:14Z"
+  resourceHealthSource: appTree
+  resources:
+  - kind: Service
+    name: demo-dev
+    namespace: dev
+    status: Synced
+    version: v1
+  - group: apps
+    kind: Deployment
+    name: demo-dev
+    namespace: dev
+    status: Synced
+    version: v1
+  - group: networking.k8s.io
+    kind: Ingress
+    name: demo-dev
+    namespace: default
+    status: Synced
+    version: v1
+  sourceHydrator: {}
+  sourceType: Kustomize
+  summary:
+    externalURLs:
+    - https://demo.local/
+    images:
+    - nginx:stable
+  sync:
+    comparedTo:
+      destination:
+        namespace: dev
+        server: https://kubernetes.default.svc
+      source:
+        path: overlays/dev
+        repoURL: https://github.com/oleiarme/k8s-platform-lab.git
+        targetRevision: main
+    revision: df4d5f2752a5bdc13dff3300c75efe6b275f8af9
+    status: Synced
