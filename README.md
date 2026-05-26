@@ -106,4 +106,19 @@ GitHub Actions validates Kubernetes manifests using kubeconform.
 - External DNS
 - Real TLS issuers
 - Multi-environment GitOps
+
+# Operational Challenges
+
+## Ingress Controller Port Conflict
+
+k3s deploys Traefik by default, which occupied host ports 80/443.
+
+Because ingress-nginx also required those ports, the ingress-nginx service load balancer pods were stuck in Pending state.
+
+Resolution:
+- Disabled Traefik LoadBalancer service via HelmChartConfig
+- Freed host ports 80/443
+- ingress-nginx acquired external IP successfully
+- ArgoCD application health transitioned to Healthy
+
 # trigger
