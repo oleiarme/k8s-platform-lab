@@ -2,6 +2,10 @@
 
 Production-style Kubernetes platform lab built on k3s inside WSL Ubuntu.
 
+## Architecture
+
+![Architecture](docs/architecture.png)
+
 ## Stack
 
 - Kubernetes (k3s)
