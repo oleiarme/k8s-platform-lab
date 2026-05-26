@@ -25,13 +25,14 @@ jobs:
 
       - name: Validate raw manifests
         run: |
-          find . \
-            \( -path "./.github" -o -path "./charts" \) -prune \
-            -o \( -name "*.yaml" -o -name "*.yml" \) -print \
-            | while read file; do
-                echo "Validating $file"
-                kubeconform -ignore-missing-schemas "$file"
-              done
+          for file in $(find . -name "*.yaml" -o -name "*.yml"); do
+            if [[ $file == ./.github/* ]] || [[ $file == ./charts/* ]]; then
+              continue
+            fi
+
+            echo "Validating $file"
+            kubeconform -ignore-missing-schemas "$file"
+          done
 
       - name: Validate Helm chart
         run: |
