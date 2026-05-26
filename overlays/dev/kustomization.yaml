@@ -7,5 +7,5 @@ helmGlobals:
 helmCharts:
   - name: demo-app
     releaseName: demo-dev
-    namespace: default
+    namespace: dev
     valuesFile: values.yaml
