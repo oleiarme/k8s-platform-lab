@@ -6,9 +6,6 @@ on:
       - main
   pull_request:
 
-env:
-  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-
 jobs:
   validate:
     runs-on: ubuntu-latest
@@ -17,10 +14,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Set up Kubeconform
-        uses: bmuschko/setup-kubeconform@v1
-
-      - name: Validate Kubernetes manifests
+      - name: Install kubeconform
         run: |
-          find . \( -path "./.github" -prune \) -o \
-          \( -name "*.yaml" -o -name "*.yml" \) -print | xargs kubeconform -summary -ignore-missing-schemas
+          curl -L https://github.com/yannh/kubeconform/releases/latest/download/kubeconform-linux-amd64.tar.gz \
+          | tar xz
+          sudo mv kubeconform /usr/local/bin/
+
+      - name: Validate raw Kubernetes manifests
+        run: |
+          find . \
+            \( -path "./.github" -o -path "./charts" \) -prune \
+            -o \( -name "*.yaml" -o -name "*.yml" \) -print \
+            | while read file; do
+                echo "Validating $file"
+                kubeconform "$file"
+              done
+
+      - name: Validate Helm chart
+        run: |
+          helm template demo-app ./charts/demo-app | kubeconform -summary1~
