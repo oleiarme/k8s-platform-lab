@@ -1,24 +1,23 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: demo-ingress
-  namespace: default
+  name: {{ .Values.app.name }}
   annotations:
     cert-manager.io/cluster-issuer: selfsigned-issuer
 spec:
   ingressClassName: nginx
   tls:
   - hosts:
-    - demo.local
+    - {{ .Values.ingress.host }}
     secretName: demo-tls
   rules:
-  - host: demo.local
+  - host: {{ .Values.ingress.host }}
     http:
       paths:
       - path: /
         pathType: Prefix
         backend:
           service:
-            name: demo
+            name: {{ .Values.app.name }}
             port:
               number: 80

@@ -1,11 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: demo
-  namespace: default
+  name: {{ .Values.app.name }}
 spec:
   selector:
-    app: demo
+    app: {{ .Values.app.name }}
   ports:
   - port: 80
     targetPort: 80

@@ -1,0 +1,11 @@
+replicaCount: 3
+
+app:
+  name: demo
+
+image:
+  repository: nginx
+  tag: stable
+
+ingress:
+  host: demo.local
