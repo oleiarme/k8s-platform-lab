@@ -8,4 +8,4 @@ image:
   tag: stable
 
 ingress:
-  host: demo.local
+  host: k8s-lab.local
